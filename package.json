@@ -1,0 +1,20 @@
+{
+  "name": "rate-limiter",
+  "version": "1.0.0",
+  "description": "Implementation of the most common rate limiting algorithms: Fixed Window, Sliding Window, Leaky Bucket, Token Bucket. To be used as middleware for express applications.",
+  "homepage": "https://github.com/roneysilva25/rate-limiter#readme",
+  "bugs": {
+    "url": "https://github.com/roneysilva25/rate-limiter/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/roneysilva25/rate-limiter.git"
+  },
+  "license": "ISC",
+  "author": "roneysilva25",
+  "type": "module",
+  "main": "index.ts",
+  "scripts": {
+    "test": "yarn test"
+  }
+}
