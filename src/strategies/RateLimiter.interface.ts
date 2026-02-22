@@ -1,7 +1,11 @@
+import type { Storage } from "../db/Storage.js";
+import type { PacketPayload } from "./FixedWindows.interfaces.js";
+
 export interface RateLimiter {
+    readonly storage?: typeof Storage,
     capacity: number;
     timeWindowInMs: number;
-    forwardCb: (packetKey: string) => void;
-    dropCb:(packetKey: string) => void;
+    forwardCb: (packetInfo: PacketPayload) => void;
+    dropCb:(packetInfo: PacketPayload) => void;
     handle: (packetKey: string) => void;
 }

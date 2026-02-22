@@ -1,5 +1,5 @@
 interface PacketPayload {
-    currentTime: number;
+    createdAt: number;
     allowance: number;
 }
 
