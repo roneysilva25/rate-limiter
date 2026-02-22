@@ -15,7 +15,7 @@
   "type": "module",
   "main": "index.ts",
   "scripts": {
-    "test": "npx jest"
+    "test": "npx jest --watch"
   },
   "devDependencies": {
     "@swc/core": "^1.15.11",

@@ -1,6 +1,6 @@
-import { Storage } from "../db/Storage.js";
-import type { PacketPayload } from "./FixedWindows.interfaces.js";
-import type { RateLimiter } from "./RateLimiter.interface.js";
+import { Storage } from "../db/Storage.ts";
+import type { PacketPayload } from "./FixedWindows.interfaces.ts";
+import type { RateLimiter, RateLimiterConstructor } from "./RateLimiter.interface.ts";
 
 export class FixedWindow implements RateLimiter {
     capacity: number;
@@ -15,7 +15,7 @@ export class FixedWindow implements RateLimiter {
         forwardCb, 
         timeWindowInMs,
         storage = Storage,
-    }: RateLimiter) {
+    }: RateLimiterConstructor) {
         this.capacity = capacity;
         this.dropCb = dropCb;
         this.forwardCb = forwardCb;
@@ -27,7 +27,7 @@ export class FixedWindow implements RateLimiter {
         const existingPacket = this.storage.retrieve<PacketPayload>(packetKey);
         const currentTime = new Date().getTime();
 
-        if (!existingPacket || existingPacket.createdAt - currentTime >= this.timeWindowInMs) {
+        if (!existingPacket || currentTime - existingPacket.createdAt >= this.timeWindowInMs) {
             const createdPacket = this.storage.store<PacketPayload>({
                 key: packetKey,
                 payload: {
@@ -39,7 +39,7 @@ export class FixedWindow implements RateLimiter {
             return this.forwardCb(createdPacket);
         }
 
-        if (existingPacket.allowance - 1 >= 1) {
+        if (existingPacket.allowance - 1 >= 0) {
             const updatedPacket = this.storage.store<PacketPayload>({
                 key: packetKey,
                 payload: {

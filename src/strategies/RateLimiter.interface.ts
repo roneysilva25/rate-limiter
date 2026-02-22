@@ -1,5 +1,5 @@
-import type { Storage } from "../db/Storage.js";
-import type { PacketPayload } from "./FixedWindows.interfaces.js";
+import type { Storage } from "../db/Storage.ts";
+import type { PacketPayload } from "./FixedWindows.interfaces.ts";
 
 export interface RateLimiter {
     readonly storage?: typeof Storage,
@@ -9,3 +9,5 @@ export interface RateLimiter {
     dropCb:(packetInfo: PacketPayload) => void;
     handle: (packetKey: string) => void;
 }
+
+export type RateLimiterConstructor = Omit<RateLimiter, "handle">;
