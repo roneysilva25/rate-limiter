@@ -1,29 +1,23 @@
 import { Storage } from "../db/Storage.ts";
-import type { PacketPayload } from "./FixedWindows.interfaces.ts";
-import type { RateLimiter, RateLimiterConstructor } from "./RateLimiter.interface.ts";
+import type { PacketPayload } from "./FixedWindow.interfaces.ts";
+import type { HandleArgs, Algorithm, AlgorithmConstructorArgs } from "./Algorithm.interface.ts";
 
-export class FixedWindow implements RateLimiter {
+export class FixedWindow implements Algorithm {
     capacity: number;
-    dropCb: (packetInfo: PacketPayload) => void;
-    forwardCb: (packetInfo: PacketPayload) => void;
     timeWindowInMs: number; 
     storage: typeof Storage;
 
     constructor({ 
-        capacity, 
-        dropCb, 
-        forwardCb, 
+        capacity,  
         timeWindowInMs,
-        storage = Storage,
-    }: RateLimiterConstructor) {
+        storage,
+    }: AlgorithmConstructorArgs) {
         this.capacity = capacity;
-        this.dropCb = dropCb;
-        this.forwardCb = forwardCb;
         this.timeWindowInMs = timeWindowInMs;
         this.storage = storage;
     }
 
-    handle(packetKey: string) {
+    handle({ packetKey, forwardCb, dropCb }: HandleArgs) {
         const existingPacket = this.storage.retrieve<PacketPayload>(packetKey);
         const currentTime = new Date().getTime();
 
@@ -36,7 +30,7 @@ export class FixedWindow implements RateLimiter {
                 },
             });
 
-            return this.forwardCb(createdPacket);
+            return forwardCb(createdPacket);
         }
 
         if (existingPacket.allowance - 1 >= 0) {
@@ -48,9 +42,9 @@ export class FixedWindow implements RateLimiter {
                 },
             });
 
-            return this.forwardCb(updatedPacket);
+            return forwardCb(updatedPacket);
         }
 
-        return this.dropCb(existingPacket);
+        return dropCb(existingPacket);
     }
 }

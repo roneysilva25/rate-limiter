@@ -1,4 +1,4 @@
-import { FixedWindow } from "../src/strategies/FixedWindow.ts";
+import { FixedWindow } from "../src/algorithms/FixedWindow.ts";
 
 describe("FixedWindow", () => {
     afterEach(() => {
@@ -17,8 +17,6 @@ describe("FixedWindow", () => {
 
     const fixedWindowArgs = {
         capacity: 200,
-        dropCb: mockDropCb,
-        forwardCb: mockForwardCb,
         timeWindowInMs: 1000*60*2,
         storage: mockStorage,
     }
@@ -41,7 +39,12 @@ describe("FixedWindow", () => {
         mockRetrieve.mockReturnValueOnce(undefined);
         mockStore.mockReturnValueOnce(createdPacket);
 
-        fixedWindow.handle("packetKey");
+        fixedWindow.handle({ 
+            packetKey: "packetKey",  
+            dropCb: mockDropCb,
+            forwardCb: mockForwardCb,
+        });
+
         expect(mockStore).toHaveBeenCalledWith(createdPacket);
         expect(mockForwardCb).toHaveBeenCalledWith(createdPacket);
     });
@@ -61,7 +64,11 @@ describe("FixedWindow", () => {
         });
         mockStore.mockReturnValueOnce(updatedPacket);
 
-        fixedWindow.handle("packetKey");
+        fixedWindow.handle({ 
+            packetKey: "packetKey",  
+            dropCb: mockDropCb,
+            forwardCb: mockForwardCb,
+        });
 
         expect(mockForwardCb).toHaveBeenCalledWith(updatedPacket);
     });
@@ -81,7 +88,11 @@ describe("FixedWindow", () => {
         mockRetrieve.mockReturnValueOnce(foundPacket);
         mockStore.mockReturnValueOnce(updatedPacket);
 
-        fixedWindow.handle("packetKey");
+        fixedWindow.handle({ 
+            packetKey: "packetKey",  
+            dropCb: mockDropCb,
+            forwardCb: mockForwardCb,
+        });
 
         expect(mockStore).toHaveBeenCalledWith({
             key: "packetKey",
@@ -99,7 +110,11 @@ describe("FixedWindow", () => {
         mockGetTime.mockReturnValueOnce(foundPacket.createdAt + 10);
         mockRetrieve.mockReturnValueOnce(foundPacket);
 
-        fixedWindow.handle("packetKey");
+        fixedWindow.handle({ 
+            packetKey: "packetKey",  
+            dropCb: mockDropCb,
+            forwardCb: mockForwardCb,
+        });
 
         expect(mockDropCb).toHaveBeenCalledWith(foundPacket);
     });
