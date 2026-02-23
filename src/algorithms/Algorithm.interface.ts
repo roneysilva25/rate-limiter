@@ -1,5 +1,5 @@
-import type { Storage } from "../db/Storage";
-import type { PacketPayload } from "./FixedWindow.interfaces";
+import type { Storage } from "../db/Storage.js";
+import type { PacketPayload } from "./FixedWindow.interfaces.js";
 
 export interface HandleArgs {
     packetKey: string;

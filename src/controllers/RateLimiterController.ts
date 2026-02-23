@@ -1,4 +1,4 @@
-import type { ConfigResponseHeaders, DropArgs, ForwardArgs } from "./RateLimiterController.interfaces";
+import type { ConfigResponseHeaders, DropArgs, ForwardArgs } from "./RateLimiterController.interfaces.js";
 
 export class RateLimiterController {
     private configResponseHeaders({ limiterInfo, packetInfo, res  }: ConfigResponseHeaders) {

@@ -1,4 +1,4 @@
-import type { PacketPayload } from "../algorithms/FixedWindow.interfaces";
+import type { PacketPayload } from "../algorithms/FixedWindow.interfaces.js";
 import type { NextFunction, Response, Request, } from "express";
 
 interface LimiterInfo {

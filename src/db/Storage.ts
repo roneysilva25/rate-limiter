@@ -1,4 +1,4 @@
-import type { StoreArgs } from "./Storage.interfaces";
+import type { StoreArgs } from "./Storage.interfaces.js";
 
 export class Storage {
     private static instance: Storage;

@@ -1,4 +1,4 @@
-import type { Storage } from "./db/Storage";
+import type { Storage } from "./db/Storage.js";
 
 interface RateLimiterConstructorArgs {
     algorithm: "fixed_window";

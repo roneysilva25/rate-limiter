@@ -1,9 +1,9 @@
 import type { NextFunction, Request, Response } from "express";
-import { Storage } from "./db/Storage";
-import type { Algorithm } from "./algorithms/Algorithm.interface";
-import { RateLimiterController } from "./controllers/RateLimiterController";
-import { AlgorithmFactory } from "./factories/AlgorithmFactory";
-import type { RateLimiterConstructorArgs } from "./interfaces";
+import { Storage } from "./db/Storage.js";
+import type { Algorithm } from "./algorithms/Algorithm.interface.js";
+import { RateLimiterController } from "./controllers/RateLimiterController.js";
+import { AlgorithmFactory } from "./factories/AlgorithmFactory.js";
+import type { RateLimiterConstructorArgs } from "./interfaces.js";
 
 export class RateLimiter {
     private readonly algorithm: Algorithm;
