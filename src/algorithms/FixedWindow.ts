@@ -1,6 +1,6 @@
-import { Storage } from "../db/Storage.ts";
-import type { PacketPayload } from "./FixedWindow.interfaces.ts";
-import type { HandleArgs, Algorithm, AlgorithmConstructorArgs } from "./Algorithm.interface.ts";
+import { Storage } from "../db/Storage";
+import type { PacketPayload } from "./FixedWindow.interfaces";
+import type { HandleArgs, Algorithm, AlgorithmConstructorArgs } from "./Algorithm.interface";
 
 export class FixedWindow implements Algorithm {
     capacity: number;

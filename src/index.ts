@@ -1,9 +1,9 @@
 import type { NextFunction, Request, Response } from "express";
-import { Storage } from "./db/Storage.ts";
-import type { Algorithm } from "./algorithms/Algorithm.interface.ts";
-import { RateLimiterController } from "./controllers/RateLimiterController.ts";
-import { AlgorithmFactory } from "./factories/AlgorithmFactory.ts";
-import type { RateLimiterConstructorArgs } from "./interfaces.ts";
+import { Storage } from "./db/Storage";
+import type { Algorithm } from "./algorithms/Algorithm.interface";
+import { RateLimiterController } from "./controllers/RateLimiterController";
+import { AlgorithmFactory } from "./factories/AlgorithmFactory";
+import type { RateLimiterConstructorArgs } from "./interfaces";
 
 export class RateLimiter {
     private readonly algorithm: Algorithm;

@@ -3,11 +3,11 @@
   "compilerOptions": {
     // File Layout
     // "rootDir": "./src",
-    // "outDir": "./dist",
+    "outDir": "./dist",
 
     // Environment Settings
     // See also https://aka.ms/tsconfig/module
-    "module": "nodenext",
+    "module": "es6",
     "target": "esnext",
     "types": ["jest"],
     // For nodejs:
@@ -34,7 +34,6 @@
 
     // Recommended Options
     "strict": true,
-    "allowImportingTsExtensions": true,
     "jsx": "react-jsx",
     "verbatimModuleSyntax": true,
     "isolatedModules": true,

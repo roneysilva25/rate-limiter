@@ -1,4 +1,4 @@
-import type { Algorithm, AlgorithmConstructorArgs } from "../algorithms/Algorithm.interface.ts";
+import type { Algorithm, AlgorithmConstructorArgs } from "../algorithms/Algorithm.interface";
 
 type Algorithms = "fixed_window";
 

@@ -1,5 +1,5 @@
-import type { Storage } from "../db/Storage.ts";
-import type { PacketPayload } from "./FixedWindow.interfaces.ts";
+import type { Storage } from "../db/Storage";
+import type { PacketPayload } from "./FixedWindow.interfaces";
 
 export interface HandleArgs {
     packetKey: string;

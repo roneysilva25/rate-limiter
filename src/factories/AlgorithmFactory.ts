@@ -1,6 +1,6 @@
-import { FixedWindow } from "../algorithms/FixedWindow.ts";
-import type { Algorithm } from "../algorithms/Algorithm.interface.ts";
-import type { GetArgs, IAlgorithmFactory } from "./AlgorithmFactory.interfaces.ts";
+import { FixedWindow } from "../algorithms/FixedWindow";
+import type { Algorithm } from "../algorithms/Algorithm.interface";
+import type { GetArgs, IAlgorithmFactory } from "./AlgorithmFactory.interfaces";
 
 export class AlgorithmFactory implements IAlgorithmFactory {
     public get({ algorithm, config }: GetArgs): Algorithm {    
