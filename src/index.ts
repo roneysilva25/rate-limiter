@@ -1,65 +1,61 @@
 import type { NextFunction, Request, Response } from "express";
 import { Storage } from "./db/Storage.js";
-import type { Algorithm } from "./algorithms/Algorithm.interface.js";
 import { RateLimiterController } from "./controllers/RateLimiterController.js";
 import { AlgorithmFactory } from "./factories/AlgorithmFactory.js";
-import type { RateLimiterConstructorArgs } from "./interfaces.js";
+import type { RateLimiterArgs } from "./interfaces.js";
 
-export class RateLimiter {
-    private readonly algorithm: Algorithm;
-    private readonly controller: RateLimiterController;
-    private readonly capacity: number;
-    private readonly timeWindowInMs: number;
-
-    constructor({
-        algorithm,
-        capacity,
-        timeWindowInMs,
-        storage = Storage,
-    }: RateLimiterConstructorArgs) {
-        this.capacity = capacity;
-        this.timeWindowInMs = timeWindowInMs;
-        this.controller = new RateLimiterController();
-        this.algorithm = new AlgorithmFactory().get({
-            algorithm,
-            config: {
-                timeWindowInMs,
-                storage,
-                capacity,
-            },
-        });
+function validateIP(req: Request, res: Response) {
+    if (!req.ip) {
+        return res.status(400).send("Invalid IP Address.");
     }
+}
 
-    private validateIP(req: Request, res: Response) {
-        if (!req.ip) {
-            return res.status(400).send("Invalid IP Address.");
+function rateLimiter({
+    algorithm,
+    capacity,
+    timeWindowInMs,
+    storage = Storage
+}: RateLimiterArgs) {
+    const controller = new RateLimiterController(); 
+    const algFactory = new AlgorithmFactory().get({
+        algorithm,
+        config: {
+            timeWindowInMs,
+            storage,
+            capacity,
+        },
+    });
+    
+    return {
+        limit(req: Request, res: Response, next: NextFunction) {
+            validateIP(req, res);
+
+            return algFactory.handle({
+                packetKey: req.ip as string,
+                dropCb: (packetInfo) => controller.drop({
+                    req,
+                    res,
+                    packetInfo,
+                    limiterInfo: {
+                        capacity,
+                        timeWindowInMs,
+                    },
+                }),
+                forwardCb: (packetInfo) => controller.forward({
+                    req,
+                    res,
+                    next,
+                    packetInfo,
+                    limiterInfo: {
+                        capacity,
+                        timeWindowInMs,
+                    },
+                }),
+            });
         }
     }
+}
 
-    limit(req: Request, res: Response, next: NextFunction) {
-        this.validateIP(req, res);
-
-        return this.algorithm.handle({
-            packetKey: req.ip as string,
-            dropCb: (packetInfo) => this.controller.drop({
-                req,
-                res,
-                packetInfo,
-                limiterInfo: {
-                    capacity: this.capacity,
-                    timeWindowInMs: this.timeWindowInMs,
-                },
-            }),
-            forwardCb: (packetInfo) => this.controller.forward({
-                req,
-                res,
-                next,
-                packetInfo,
-                limiterInfo: {
-                    capacity: this.capacity,
-                    timeWindowInMs: this.timeWindowInMs,
-                },
-            }),
-        });
-    }
+export {
+    rateLimiter,
 }
