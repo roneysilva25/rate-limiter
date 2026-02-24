@@ -13,7 +13,7 @@
   "license": "ISC",
   "author": "roneysilva25",
   "type": "module",
-  "main": "index.ts",
+  "main": "src/index.ts",
   "scripts": {
     "test": "npx jest --watch",
     "build": "tsc"
