@@ -1,4 +1,4 @@
-import { FixedWindow } from "../src/algorithms/FixedWindow.js";
+import { FixedWindow } from "../algorithms/FixedWindow.js";
 
 describe("FixedWindow", () => {
     afterEach(() => {
