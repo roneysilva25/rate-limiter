@@ -11,7 +11,7 @@
     "url": "git+https://github.com/roneysilva25/rate-limiter.git"
   },
   "license": "ISC",
-  "author": "roneysilva25",
+  "author": "Roney Silva <roney.diego000@gmail.com>  (https://roneysilva25.github.io/portfolio)",
   "type": "module",
   "main": "src/index.ts",
   "scripts": {
