@@ -11,9 +11,9 @@ function validateIP(req: Request, res: Response) {
 }
 
 function rateLimiter({
-    algorithm,
-    capacity,
-    timeWindowInMs,
+    algorithm = "fixed_window",
+    capacity = 200,
+    timeWindowInMs = 120000,
     storage = Storage
 }: RateLimiterArgs) {
     const controller = new RateLimiterController(); 

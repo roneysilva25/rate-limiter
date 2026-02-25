@@ -1,9 +1,9 @@
 import type { Storage } from "./db/Storage.js";
 
 interface RateLimiterArgs {
-    algorithm: "fixed_window";
-    capacity: number;
-    timeWindowInMs: number;
+    algorithm?: "fixed_window";
+    capacity?: number;
+    timeWindowInMs?: number;
     storage?: typeof Storage;
 }
 
